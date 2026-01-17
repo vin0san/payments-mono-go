@@ -211,7 +211,7 @@ This project is built to understand:
 ## 🤝 Contributing
 
 This project is currently in active development.
-Contributions, suggestions, and discussions are welcome.
+Contributions, suggestions, and discussions are welcomed.
 
 ---
 
