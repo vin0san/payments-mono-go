@@ -27,12 +27,12 @@ It was started to deeply understand how modern payment gateways are designed and
 * User authentication (JWT + bcrypt)
 * JWT authorization middleware
 * Protected routes
-
+* Wallet system
 
 
 ### 🚧 In Progress
 
-* Wallet system
+
 * Transaction ledger (double entry)
 
 ### 🔮 Planned
@@ -192,7 +192,7 @@ This project is purely educational and architectural.
 * [x] Standard API responses
 * [x] PostgreSQL integration
 * [x] User auth
-* [ ] Wallet module
+* [x] Wallet module
 * [ ] Transactions
 * [ ] Webhooks
 * [ ] Fraud scoring
