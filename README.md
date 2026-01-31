@@ -1,5 +1,6 @@
 # 🚀 Go Payments Platform (Monolith → Microservices)
 
+
 A production-grade **payment platform backend** built in **Go**, inspired by Stripe/Adyen architecture.
 Designed as a **monolith-first system**, with a clear roadmap to evolve into microservices.
 
@@ -21,12 +22,16 @@ It was started to deeply understand how modern payment gateways are designed and
 * Request tracing (X-Request-ID)
 * Stripe-style API responses
 * Health check endpoint
-
-### 🚧 In Progress
-
 * PostgreSQL integration (pgx)
 * Database migrations
 * User authentication (JWT + bcrypt)
+* JWT authorization middleware
+* Protected routes
+
+
+
+### 🚧 In Progress
+
 * Wallet system
 * Transaction ledger (double entry)
 
@@ -109,7 +114,7 @@ Design principles:
 | Logging    | Zap                          |
 | Config     | Viper                        |
 | Auth       | JWT                          |
-| Migrations | Goose / Atlas (planned)      |
+| Migrations | golang-migrate (current), Goose / Atlas (planned)      |
 | Infra      | Docker, Kubernetes (planned) |
 | Messaging  | Kafka / NATS (planned)       |
 
@@ -185,8 +190,8 @@ This project is purely educational and architectural.
 * [x] Project structure
 * [x] Logging + middleware
 * [x] Standard API responses
-* [ ] PostgreSQL integration
-* [ ] User auth
+* [x] PostgreSQL integration
+* [x] User auth
 * [ ] Wallet module
 * [ ] Transactions
 * [ ] Webhooks
@@ -211,7 +216,7 @@ This project is built to understand:
 ## 🤝 Contributing
 
 This project is currently in active development.
-Contributions, suggestions, and discussions are welcomed.
+Contributions, suggestions, and discussions are welcome.
 
 ---
 
