@@ -9,6 +9,15 @@ import (
 type Config struct {
 	ServerPort string `mapstructure:"SERVER_PORT"`
 	Env        string `mapstructure:"ENV"`
+	DB         DBConfig
+}
+
+type DBConfig struct {
+	Host string
+	Port string
+	Name string
+	User string
+	Pass string
 }
 
 func LoadConfig() *Config {
@@ -28,6 +37,14 @@ func LoadConfig() *Config {
 
 	if cfg.ServerPort == "" {
 		cfg.ServerPort = "8080"
+	}
+
+	cfg.DB = DBConfig{
+		Host: viper.GetString("DB_HOST"),
+		Port: viper.GetString("DB_PORT"),
+		Name: viper.GetString("DB_NAME"),
+		User: viper.GetString("DB_USER"),
+		Pass: viper.GetString("DB_PASS"),
 	}
 
 	return cfg
