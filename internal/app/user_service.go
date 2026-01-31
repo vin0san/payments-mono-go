@@ -14,11 +14,18 @@ import (
 )
 
 type UserService struct {
-	repo *repository.UserRepository
+	repo          *repository.UserRepository
+	walletService *WalletService
 }
 
-func NewUserService(r *repository.UserRepository) *UserService {
-	return &UserService{repo: r}
+func NewUserService(
+	r *repository.UserRepository,
+	w *WalletService,
+) *UserService {
+	return &UserService{
+		repo:          r,
+		walletService: w,
+	}
 }
 
 func (s *UserService) CreateUser(ctx context.Context, name, email string) (*domain.User, error) {
@@ -55,6 +62,10 @@ func (s *UserService) Register(ctx context.Context, name, email, password string
 		if strings.Contains(err.Error(), "users_email_key") {
 			return nil, errors.New("email already exists")
 		}
+		return nil, err
+	}
+	err = s.walletService.CreateForUser(ctx, u.ID)
+	if err != nil {
 		return nil, err
 	}
 

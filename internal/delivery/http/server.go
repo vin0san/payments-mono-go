@@ -18,10 +18,11 @@ import (
 )
 
 type Server struct {
-	Router      *gin.Engine
-	Config      *config.Config
-	DB          *pgxpool.Pool
-	UserHandler *UserHandler
+	Router        *gin.Engine
+	Config        *config.Config
+	DB            *pgxpool.Pool
+	UserHandler   *UserHandler
+	WalletHandler *WalletHandler
 }
 
 func NewServer() *Server {
@@ -45,17 +46,22 @@ func NewServer() *Server {
 	router.Use(gin.Recovery())
 	router.Use(RequestID())
 
+	walletRepo := repository.NewWalletRepository(db)
+	walletService := app.NewWalletService(walletRepo)
+	walletHandler := NewWalletHandler(walletService)
+
 	// dependencies
 	userRepo := repository.NewUserRepository(db)
-	userService := app.NewUserService(userRepo)
+	userService := app.NewUserService(userRepo, walletService)
 	userHandler := NewUserHandler(userService)
 
 	// build server
 	s := &Server{
-		Router:      router,
-		Config:      cfg,
-		DB:          db,
-		UserHandler: userHandler,
+		Router:        router,
+		Config:        cfg,
+		DB:            db,
+		UserHandler:   userHandler,
+		WalletHandler: walletHandler,
 	}
 
 	s.setupRoutes()
@@ -76,6 +82,7 @@ func (s *Server) setupRoutes() {
 	protected.Use(AuthMiddleware())
 
 	protected.GET("/me", s.meHandler)
+	protected.GET("/wallet/balance", s.WalletHandler.GetBalance)
 }
 
 func (s *Server) healthHandler(c *gin.Context) {
