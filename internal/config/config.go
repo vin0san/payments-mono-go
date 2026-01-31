@@ -9,6 +9,7 @@ import (
 type Config struct {
 	ServerPort string `mapstructure:"SERVER_PORT"`
 	Env        string `mapstructure:"ENV"`
+	JWTSecret  string
 	DB         DBConfig
 }
 
@@ -38,6 +39,7 @@ func LoadConfig() *Config {
 	if cfg.ServerPort == "" {
 		cfg.ServerPort = "8080"
 	}
+	cfg.JWTSecret = viper.GetString("JWT_SECRET")
 
 	cfg.DB = DBConfig{
 		Host: viper.GetString("DB_HOST"),

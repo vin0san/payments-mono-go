@@ -10,6 +10,7 @@ import (
 	"pye/internal/repository"
 	"pye/pkg/logger"
 	"pye/pkg/response"
+	"pye/pkg/security"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -25,6 +26,11 @@ type Server struct {
 
 func NewServer() *Server {
 	cfg := config.LoadConfig()
+
+	if cfg.JWTSecret == "" {
+		logger.Log.Fatal("JWT_SECRET is not set in environment variables")
+	}
+	security.InitJWTSecret(cfg.JWTSecret)
 
 	db, err := repository.NewPostgres(cfg.DB)
 	if err != nil {
